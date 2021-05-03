@@ -18,7 +18,8 @@ public class AddressBookMain {
         while(flag)
         {
             System.out.println("1.Add New Address Book");
-            System.out.println("2.Exit");
+            System.out.println("2.Find Duplicate Entry in Address Book");
+            System.out.println("3.Exit");
             System.out.println("Enter choice: ");
             int option = sc.nextInt();
             switch (option){
@@ -34,6 +35,13 @@ public class AddressBookMain {
                     }
                 }
                 case 2:{
+                    for (Map.Entry<String,AddressBook> entry: addBookMain.bookList.entrySet()){
+                        AddressBook value = entry.getValue();
+                        System.out.println("Address Book Name: "+entry.getKey());
+                        value.checkDuplicate();
+                    }
+                }
+                case 3:{
                     flag = false;
                     break;
                 }

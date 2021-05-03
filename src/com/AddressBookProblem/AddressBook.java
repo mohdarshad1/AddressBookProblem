@@ -1,7 +1,12 @@
 package com.AddressBookProblem;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.Scanner;
+import java.util.Set;
+import java.util.function.Predicate;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class AddressBook {
 
@@ -22,6 +27,8 @@ public class AddressBook {
 
         System.out.println("Enter First Name: ");
         String firstname = sc.next();
+
+        checkDuplicate();
 
         System.out.println("Enter last name: ");
         String lastname = sc.next();
@@ -49,6 +56,7 @@ public class AddressBook {
         Contact contactObj = new Contact(firstname,lastname,address,city,state,zip,phonenumber,email);
 
         contactList.add(contactObj);
+
 
         return contactList;
     }
@@ -151,5 +159,14 @@ public class AddressBook {
             return true;
         else
             return false;
+    }
+
+    public void checkDuplicate(){
+        Set<String> ContactSet = new HashSet<>();
+        Set<Contact> FilterSet = contactList.stream().filter( n -> !ContactSet.add(n.getFirst_name())).collect(Collectors.toSet());
+
+        for(Contact contact:FilterSet){
+            System.out.println("The Duplicate Contact is: "+contact.getFirst_name()+" "+contact.getLast_name());
+        }
     }
 }

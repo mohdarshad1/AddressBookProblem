@@ -196,6 +196,7 @@ public class AddressBook {
         for(Contact contact: list){
             System.out.println("First Name: "+contact.getFirst_name());
             System.out.println("Last Name: "+contact.getLast_name());
+
         }
     }
 }

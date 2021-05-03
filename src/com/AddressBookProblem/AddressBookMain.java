@@ -1,6 +1,8 @@
 package com.AddressBookProblem;
 
 import java.util.*;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class AddressBookMain {
 
@@ -22,7 +24,8 @@ public class AddressBookMain {
             System.out.println("6.Search Contact by city Using City and Person HashMap");
             System.out.println("7.Count Contact By State");
             System.out.println("8.Count Contact By City");
-            System.out.println("9.Exit");
+            System.out.println("9.Sort and Print in Alphabetically Order");
+            System.out.println("10.Exit");
             System.out.println("Enter choice: ");
             int option = sc.nextInt();
             switch (option){
@@ -81,6 +84,9 @@ public class AddressBookMain {
                     break;
                 }
                 case 9:{
+                    addBookMain.sortContactByName();
+                }
+                case 10:{
                     flag = false;
                     break;
                 }
@@ -162,7 +168,8 @@ public class AddressBookMain {
             AddressBook value = entry.getValue();
            ArrayList<Contact> contacts = value.ContactByState.entrySet().stream().filter(findState -> findState.getKey().equals(stateName)).map(Map.Entry::getValue).findFirst().orElse(null);
             for(Contact contact: contacts){
-                System.out.println("First Name: "+contact.getFirst_name()+" Last Name: "+ contact.getLast_name());
+                System.out.println("First Name: "+contact.getFirst_name());
+                System.out.println("Last Name: "+contact.getLast_name());
             }
         }
     }
@@ -171,7 +178,8 @@ public class AddressBookMain {
             AddressBook value = entry.getValue();
             ArrayList<Contact> contacts = value.ContactByCity.entrySet().stream().filter(findCity -> findCity.getKey().equals(cityName)).map(Map.Entry::getValue).findFirst().orElse(null);
             for(Contact contact: contacts){
-                System.out.println("First Name: "+contact.getFirst_name()+" Last Name: "+ contact.getLast_name());
+                System.out.println("First Name: "+contact.getFirst_name());
+                System.out.println("Last Name: "+contact.getLast_name());
             }
         }
     }
@@ -208,5 +216,17 @@ public class AddressBookMain {
             }
         }
         System.out.println("Total number of people in this city "+city+": "+count);
+    }
+
+    private void sortContactByName() {
+        for (Map.Entry<String,AddressBook>entry:bookList.entrySet()){
+            AddressBook value = entry.getValue();
+            List<Contact> sortedList = value.contactList.stream().sorted(Comparator.comparing(Contact::getFirst_name)).collect(Collectors.toList());
+
+            for(Contact contact:sortedList){
+                System.out.println("First Name: "+contact.getFirst_name());
+                System.out.println("Last Name: "+contact.getLast_name());
+            }
+        }
     }
 }

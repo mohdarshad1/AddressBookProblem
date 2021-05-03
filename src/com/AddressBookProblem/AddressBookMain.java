@@ -30,7 +30,11 @@ public class AddressBookMain {
             switch (option)
             {
                 case 1: {
-                    addBookObj.addContact();
+                    System.out.println("Enter the number of Contact to be Added: ");
+                    int numberOfContacts = sc.nextInt();
+                    for (int i = 0; i < numberOfContacts; i++) {
+                        addBookObj.addContact();
+                    }
                     break;
                 }
                 case 2: {

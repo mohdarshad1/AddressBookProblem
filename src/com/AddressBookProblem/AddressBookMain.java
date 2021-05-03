@@ -1,5 +1,6 @@
 package com.AddressBookProblem;
 
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class AddressBookMain {
@@ -8,9 +9,8 @@ public class AddressBookMain {
     static AddressBook addBookObj = new AddressBook();
 
     public static void main(String[] args) {
-        System.out.println("Welcome to Address book Management Program");
 
-        AddressBookMain addBookMain = new AddressBookMain();
+        System.out.println("Welcome to Address book Management Program");
 
         boolean flag = true;
 
@@ -19,7 +19,9 @@ public class AddressBookMain {
 
             System.out.println("2.Edit Contact");
 
-            System.out.println("3.Exit");
+            System.out.println("3.Delete Contact");
+
+            System.out.println("4.Exit");
 
             System.out.println("Enter Choice: ");
 
@@ -36,7 +38,7 @@ public class AddressBookMain {
                     String person_name = sc.next();
 
                     boolean b = addBookObj.editContact(person_name);
-                    if (b == true) {
+                    if (b) {
                         System.out.println("Details Updated");
                     } else {
                         System.out.println("Contact Not Found");
@@ -44,6 +46,17 @@ public class AddressBookMain {
                     break;
                 }
                 case 3: {
+                    System.out.println("Enter the Contact to be deleted:");
+                    String Name = sc.next();
+                    boolean b1 = addBookObj.deleteContact(Name);
+                    if (b1) {
+                        System.out.println("Details Deleted");
+                    } else {
+                        System.out.println("Contact Not Found");
+                    }
+                    break;
+                }
+                case 4: {
                     flag =false;
                     break;
                 }

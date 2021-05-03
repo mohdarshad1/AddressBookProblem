@@ -14,4 +14,8 @@ public class AddressBook {
     public ArrayList<Contact> getContact_list() {
         return contactList;
     }
+
+    public void addContact(Contact contact){
+        contactList.add(contact);
+    }
 }

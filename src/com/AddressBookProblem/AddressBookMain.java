@@ -1,19 +1,49 @@
 package com.AddressBookProblem;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Scanner;
 
 public class AddressBookMain {
 
     static Scanner sc = new Scanner(System.in);
-    static AddressBook addBookObj = new AddressBook();
+    public Map<String,AddressBook> bookList = new HashMap<>();
 
     public static void main(String[] args) {
 
         System.out.println("Welcome to Address book Management Program");
+        AddressBookMain addBookMain = new AddressBookMain();
+        boolean flag =true;
+        while(flag)
+        {
+            System.out.println("1.Add New Address Book");
+            System.out.println("2.Exit");
+            System.out.println("Enter choice: ");
+            int option = sc.nextInt();
+            switch (option){
+                case 1: {
+                    System.out.println("Enter the Name of Address Book: ");
+                    String bookName = sc.next();
+                    if(addBookMain.bookList.containsKey(bookName)){
+                        System.out.println("The Address book Already Exists");
+                        break;
+                    }else {
+                        addBookMain.addAddressBook(bookName);
+                        break;
+                    }
+                }
+                case 2:{
+                    flag = false;
+                    break;
+                }
+            }
+        }
+    }
 
+    public void addAddressBook(String bookName){
         boolean flag = true;
-
+        AddressBook addBookObj = new AddressBook();
         while(flag){
             System.out.println("1.Add Contact");
 
@@ -24,23 +54,18 @@ public class AddressBookMain {
             System.out.println("4.Exit");
 
             System.out.println("Enter Choice: ");
-
+            ArrayList<Contact> list = null;
             int option = sc.nextInt();
 
             switch (option)
             {
                 case 1: {
-                    System.out.println("Enter the number of Contact to be Added: ");
-                    int numberOfContacts = sc.nextInt();
-                    for (int i = 0; i < numberOfContacts; i++) {
                         addBookObj.addContact();
-                    }
-                    break;
+                        break;
                 }
                 case 2: {
                     System.out.println("Enter the Person First name to edit details: ");
                     String person_name = sc.next();
-
                     boolean b = addBookObj.editContact(person_name);
                     if (b) {
                         System.out.println("Details Updated");
@@ -66,6 +91,7 @@ public class AddressBookMain {
                 }
             }
         }
+        bookList.put(bookName,addBookObj);
+        System.out.println("Address Book Added Successfully");
     }
-
 }

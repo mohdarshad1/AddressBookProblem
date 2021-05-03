@@ -18,7 +18,7 @@ public class AddressBook {
         return contactList;
     }
 
-    public void addContact(){
+    public ArrayList<Contact> addContact(){
 
         System.out.println("Enter First Name: ");
         String firstname = sc.next();
@@ -49,6 +49,8 @@ public class AddressBook {
         Contact contactObj = new Contact(firstname,lastname,address,city,state,zip,phonenumber,email);
 
         contactList.add(contactObj);
+
+        return contactList;
     }
 
     public boolean editContact(String Name)

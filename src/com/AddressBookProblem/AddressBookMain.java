@@ -1,8 +1,6 @@
 package com.AddressBookProblem;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Scanner;
+import java.util.*;
 
 public class AddressBookMain {
 
@@ -20,7 +18,9 @@ public class AddressBookMain {
             System.out.println("2.Find Duplicate Entry in Address Book");
             System.out.println("3.Search Contact from a city");
             System.out.println("4.Search Contact from a State");
-            System.out.println("5.Exit");
+            System.out.println("5.Search contact By State Using State and Person HashMap");
+            System.out.println("6.Search Contact by city Using City and Person HashMap");
+            System.out.println("7.Exit");
             System.out.println("Enter choice: ");
             int option = sc.nextInt();
             switch (option){
@@ -55,6 +55,18 @@ public class AddressBookMain {
                     break;
                 }
                 case 5:{
+                    System.out.println("Enter Name of State: ");
+                    String StateName = sc.next();
+                    addBookMain.searchPersonByCityUsinghashmap(StateName);
+                    break;
+                }
+                case 6:{
+                    System.out.println("Enter Name of City: ");
+                    String CityName = sc.next();
+                    addBookMain.searchPersonByStateUsinHashMap(CityName);
+                    break;
+                }
+                case 7:{
                     flag = false;
                     break;
                 }
@@ -129,6 +141,24 @@ public class AddressBookMain {
             AddressBook value = entry.getValue();
             System.out.println("The Address Book: "+entry.getKey());
             value.getPersonNameByCity(cityName);
+        }
+    }
+    private void searchPersonByCityUsinghashmap(String stateName) {
+        for (Map.Entry<String, AddressBook> entry : bookList.entrySet()) {
+            AddressBook value = entry.getValue();
+           ArrayList<Contact> contacts = value.ContactByState.entrySet().stream().filter(findState -> findState.getKey().equals(stateName)).map(Map.Entry::getValue).findFirst().orElse(null);
+            for(Contact contact: contacts){
+                System.out.println("First Name: "+contact.getFirst_name()+" Last Name: "+ contact.getLast_name());
+            }
+        }
+    }
+    private void searchPersonByStateUsinHashMap(String cityName) {
+        for (Map.Entry<String, AddressBook> entry : bookList.entrySet()) {
+            AddressBook value = entry.getValue();
+            ArrayList<Contact> contacts = value.ContactByCity.entrySet().stream().filter(findCity -> findCity.getKey().equals(cityName)).map(Map.Entry::getValue).findFirst().orElse(null);
+            for(Contact contact: contacts){
+                System.out.println("First Name: "+contact.getFirst_name()+" Last Name: "+ contact.getLast_name());
+            }
         }
     }
 }

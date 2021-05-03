@@ -1,51 +1,54 @@
 package com.AddressBookProblem;
 
-import java.util.ArrayList;
 import java.util.Scanner;
 
 public class AddressBookMain {
+
+    static Scanner sc = new Scanner(System.in);
+    static AddressBook addBookObj = new AddressBook();
+
     public static void main(String[] args) {
-        System.out.println("Welcome to Address Book Program");
+        System.out.println("Welcome to Address book Management Program");
+
         AddressBookMain addBookMain = new AddressBookMain();
-        addBookMain.addContactToAddressBook();
-    }
 
-    public void addContactToAddressBook(){
-        Scanner sc = new Scanner(System.in);
+        boolean flag = true;
 
-        System.out.println("Enter First Name: ");
-        String firstname = sc.next();
+        while(flag){
+            System.out.println("1.Add Contact");
 
-        System.out.println("Enter last name: ");
-        String lastname = sc.next();
+            System.out.println("2.Edit Contact");
 
-        System.out.println("Enter Address: ");
-        String address = sc.next();
+            System.out.println("3.Exit");
 
-        sc.nextLine();
+            System.out.println("Enter Choice: ");
 
-        System.out.println("Enter City: ");
-        String city = sc.next();
+            int option = sc.nextInt();
 
-        System.out.println("Enter State: ");
-        String state =sc.next();
+            switch (option)
+            {
+                case 1: {
+                    addBookObj.addContact();
+                    break;
+                }
+                case 2: {
+                    System.out.println("Enter the Person First name to edit details: ");
+                    String person_name = sc.next();
 
-        System.out.println("Enter Zip Code: ");
-        int zip = sc.nextInt();
-
-        System.out.println("Enter Phone Number:");
-        long phonenumber = sc.nextLong();
-
-        System.out.println("Enter Email: ");
-        String email = sc.next();
-
-        Contact contactObj = new Contact(firstname,lastname,address,city,state,zip,phonenumber,email);
-
-        AddressBook AddObj = new AddressBook();
-
-        ArrayList<Contact> contactList = AddObj.getContact_list();
-
-        contactList.add(contactObj);
+                    boolean b = addBookObj.editContact(person_name);
+                    if (b == true) {
+                        System.out.println("Details Updated");
+                    } else {
+                        System.out.println("Contact Not Found");
+                    }
+                    break;
+                }
+                case 3: {
+                    flag =false;
+                    break;
+                }
+            }
         }
+    }
 
 }

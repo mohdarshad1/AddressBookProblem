@@ -73,4 +73,9 @@ public class Contact {
         this.phone_number = phone_number;
         this.email = email;
     }
+    @Override
+    public String toString() {
+        return "ContactDetails: FirstName=" + first_name + ", LastName=" + last_name + ", address=" + address + ", city="
+                + city + ", state=" + state + ", email=" + email + ", zip=" + zip_code + ", phoneNumber=" + phone_number;
+    }
 }

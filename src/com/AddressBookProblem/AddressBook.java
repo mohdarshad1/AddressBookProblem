@@ -1,5 +1,9 @@
 package com.AddressBookProblem;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -17,15 +21,7 @@ public class AddressBook {
         ContactByCity = new HashMap<>();
     }
 
-    public void setList(ArrayList<Contact> list)
-    {
-        this.contactList = contactList;
-    }
-
-    public ArrayList<Contact> getContact_list() {
-        return contactList;
-    }
-
+    /*Method to Add Contact in AddressBook*/
     public ArrayList<Contact> addContact(){
 
         System.out.println("Enter First Name: ");
@@ -72,7 +68,7 @@ public class AddressBook {
 
         return contactList;
     }
-
+    /*Method to edit contact in Address Book*/
     public boolean editContact(String Name)
     {
         int flag = 0;
@@ -155,7 +151,7 @@ public class AddressBook {
         else
             return false;
     }
-
+    /*Method to delete contact from Address Book*/
     public boolean deleteContact(String name) {
         int flag = 0;
         for(Contact contact: contactList)
@@ -172,7 +168,7 @@ public class AddressBook {
         else
             return false;
     }
-
+    /*Method to check Duplicate Contact in Address Book*/
     public void checkDuplicate(){
         Set<String> ContactSet = new HashSet<>();
         Set<Contact> FilterSet = contactList.stream().filter( n -> !ContactSet.add(n.getFirst_name())).collect(Collectors.toSet());
@@ -181,7 +177,7 @@ public class AddressBook {
             System.out.println("The Duplicate Contact is: "+contact.getFirst_name()+" "+contact.getLast_name());
         }
     }
-
+    /*Search Person by State*/
     public void getPersonNameByState(String State) {
         List<Contact> list  = contactList.stream().filter(findState ->findState.getCity().equals(State)).collect(Collectors.toList());
         for(Contact contact: list){
@@ -190,7 +186,7 @@ public class AddressBook {
         }
 
     }
-
+    /*Search Person Bu City*/
     public void getPersonNameByCity(String cityName) {
         List<Contact> list  = contactList.stream().filter(city ->city.getCity().equals(cityName)).collect(Collectors.toList());
         for(Contact contact: list){
@@ -198,5 +194,34 @@ public class AddressBook {
             System.out.println("Last Name: "+contact.getLast_name());
 
         }
+    }
+    /*Read File Using FILE IO*/
+    public void readAddressBook(String AddressBookName) throws IOException {
+        Path filePath = Paths.get("addressBook.txt");
+        try {
+            System.out.println("The contacts in the address book are : ");
+            Files.lines(filePath).map(line -> line.trim()).forEach(line -> System.out.println(line));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+    /*Add contacts to File Using FILE IO*/
+    public void writeAddressBook(String AddressBookName) throws IOException {
+        Path filepath = Paths.get("addressBook.txt");
+        if (Files.notExists(filepath))
+            Files.createFile(filepath);
+        StringBuffer ContactBuffer = new StringBuffer();
+        contactList.forEach(book -> {
+            String bookDataString = book.toString().concat("\n");
+            ContactBuffer.append(bookDataString);
+        });
+
+        try {
+            Files.write(filepath, ContactBuffer.toString().getBytes());
+            System.out.println("Details Successfully added to address book file");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
     }
 }
